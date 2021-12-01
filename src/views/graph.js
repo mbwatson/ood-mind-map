@@ -3,12 +3,12 @@ import { GraphProvider, Graph } from '../components/graph'
 import useDimensions from 'react-cool-dimensions'
 import { useStore } from '../store'
 
-const nodeColors = {
-  project: 'rebeccapurple',
-  projectManager: '#00abc7',
-  funder: 'crimson',
-  collaborator: 'slategrey',
-  organization: 'darkslategrey',
+const nodeConfig = {
+  project:        { color: 'rebeccapurple', val: 8, },
+  projectManager: { color: '#00abc7',       val: 2, },
+  funder:         { color: 'crimson',       val: 5, },
+  collaborator:   { color: 'slategrey',     val: 5, },
+  organization:   { color: 'darkslategrey', val: 5, },
 }
 
 export const GraphView = () => {
@@ -26,11 +26,11 @@ export const GraphView = () => {
     let newNodes = []
     let newEdges = []
 
-    const createNode = (name, type) => ({
-      id: name,
-      name: name,
-      color: nodeColors[type],
-    })
+    const createNode = (type, name) => ({ id: name, name: name, ...nodeConfig[type] })
+    const createProjectNode = name => createNode('project', name)
+    const createProjectManagerNode = name => createNode('projectManager', name)
+    const createOrganizationNode = name => createNode('organization', name)
+
     const createEdge = (sourceID, targetID) => ({ source: sourceID, target: targetID })
 
     if (!projects || !projectManagers || !organizations || !funders || !collaborators) {
@@ -38,9 +38,9 @@ export const GraphView = () => {
     }
 
     newNodes = [...new Set([
-        ...projects.map(project => createNode(project, 'project')),
-        ...projectManagers.map(pm => createNode(pm, 'projectManager')),
-        ...organizations.map(org => createNode(org, 'organization')),
+        ...projects.map(project => createProjectNode(project)),
+        ...projectManagers.map(pm => createProjectManagerNode(pm)),
+        ...organizations.map(org => createOrganizationNode(org)),
       ])]
 
     projects.forEach(project => {
