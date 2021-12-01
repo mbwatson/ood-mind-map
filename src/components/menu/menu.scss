@@ -1,0 +1,24 @@
+nav {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  padding: 1rem 0 2rem 0;
+  border-bottom: 1px solid #44556633;
+  a, a:active, a:visited {
+    transition: color 250ms, background-color 250ms;
+    color: #456;
+    text-decoration: none;
+    padding: 1rem;
+    border-radius: 4px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  a:hover {
+    background-color: #44556611;
+  }
+  .active, .active:hover {
+    background-color: #44556666;
+    color: white !important;
+  }
+}
