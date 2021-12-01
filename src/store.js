@@ -25,13 +25,13 @@ export const StoreProvider = ({ children }) => {
     const newProjectManagers = [...new Set(data.map(d => d['PMs']))].filter(d => !!d)
     const newFunders = [...new Set(data.map(d => d['Funder']))].filter(d => !!d)
     const newCollaborators = [...new Set(data.map(d => d['Collaborating Organization']))].filter(d => !!d)
-    const newOrganizations = [...new Set([...funders, ...collaborators])]
+    const newOrganizations = [...new Set([...newFunders, ...newCollaborators])]
     
     setProjects(newProjects)
     setProjectManagers(newProjectManagers)
     setFunders(newFunders)
     setCollaborators(newCollaborators)
-    setOrganizations(newCollaborators)
+    setOrganizations(newOrganizations)
   }, [csvData])
 
   return (

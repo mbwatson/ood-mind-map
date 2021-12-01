@@ -37,21 +37,25 @@ export const GraphView = () => {
       return
     }
 
-    newNodes = [
-      ...projects.map(project => createNode(project, 'project')),
-      ...projectManagers.map(pm => createNode(pm, 'projectManager')),
-      ...organizations.map(org => createNode(org, 'organization')),
-    ]
+    newNodes = [...new Set([
+        ...projects.map(project => createNode(project, 'project')),
+        ...projectManagers.map(pm => createNode(pm, 'projectManager')),
+        ...organizations.map(org => createNode(org, 'organization')),
+      ])]
 
     projects.forEach(project => {
-      const rows = [...parsedData.filter(d => d['Name'] === project)]
-      const projectPms = [...new Set(rows.map(d => d['PMs']))].filter(d => !!d)
-      const projectFunders = [...new Set(rows.map(d => d['Funder']))].filter(d => !!d)
-      const projectCollaborators = [...new Set(rows.map(d => d['Collaborating Organization']))].filter(d => !!d)
+      const projectRows = [...parsedData.filter(row => row['Name'] === project)]
+      const projectPms = [...new Set(projectRows.map(row => row['PMs']))].filter(d => !!d)
+      const projectFunders = [...new Set(projectRows.map(row => row['Funder']))].filter(d => !!d)
+      const projectCollaborators = [...new Set(projectRows.map(row => row['Collaborating Organization']))].filter(d => !!d)
+      const relatedProjects = [...new Set(projectRows.map(row => row['Sub/Related Project']))].filter(d => !!d)
+
+      const createProjectEdge = node => createEdge(project, node)
       
-      projectPms.forEach(pm => newEdges.push(createEdge(project, pm)))
-      // projectFunders.forEach(funder => newEdges.push(createEdge(project, funder)))
-      projectCollaborators.forEach(collaborator => newEdges.push(createEdge(project, collaborator)))
+      projectPms.forEach(pm => newEdges.push(createProjectEdge(pm)))
+      projectFunders.forEach(funder => newEdges.push(createProjectEdge(funder)))
+      projectCollaborators.forEach(collaborator => newEdges.push(createProjectEdge(collaborator)))
+      relatedProjects.forEach(relatedProject => newEdges.push(createProjectEdge(relatedProject)))
     })
 
     setNodes(newNodes)
