@@ -12,7 +12,14 @@ export const Drawer = ({ openWidth = 300, children, drawerStyle }) => {
   
   return (
     <Fragment>
-      <div className="drawer" style={{ width: `${ openWidth }px`, transform: `translateX(${ open ? 0 : '-100%' })`, ...drawerStyle }}>
+      <div
+        className="drawer"
+        style={{
+          width: `${ openWidth }px`,
+          transform: `translateX(${ open ? 0 : '100%' })`,
+          ...drawerStyle,
+        }}
+      >
         { children }
         <Toggler />
       </div>

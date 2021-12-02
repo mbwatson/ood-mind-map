@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext } from 'react'
 import PropTypes from 'prop-types'
 
 const GraphContext = createContext({})
@@ -19,4 +19,3 @@ GraphProvider.propTypes = {
 }
 
 export const useGraph = () => useContext(GraphContext)
-

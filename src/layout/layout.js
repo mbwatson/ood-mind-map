@@ -24,14 +24,12 @@ export const Layout = ({ children }) => {
   return (
     <div className="app">
       <header>
-        <div className="container">
-          <img src={ renciLogo } height="40px" />
-          <nav className="main-nav">
-            <Link to="/" activeClassName="active">Data</Link>
-            <Link to="/summary" activeClassName="active">Summary</Link>
-            <Link to="/graph" activeClassName="active">Graph</Link>
-          </nav>
-        </div>
+        <img src={ renciLogo } height="40px" />
+        <nav className="main-nav">
+          <Link to="/" activeClassName="active">Data</Link>
+          <Link to="/summary" activeClassName="active">Summary</Link>
+          <Link to="/graph" activeClassName="active">Graph</Link>
+        </nav>
       </header>
       <main>
         { children }

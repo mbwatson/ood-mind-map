@@ -5,7 +5,7 @@ export const SummaryView = () => {
 
   return (
     <div className="container">
-      <h1>Data</h1>
+      <h1>Data Summary</h1>
       
       <h2>Projects</h2>
 

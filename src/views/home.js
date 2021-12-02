@@ -5,7 +5,7 @@ export const HomeView = () => {
 
   return (
     <div className="container">
-      <h1>Data</h1>
+      <h1>Raw Data</h1>
     
       <textarea
         rows="35"

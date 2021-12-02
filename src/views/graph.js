@@ -4,21 +4,41 @@ import useDimensions from 'react-cool-dimensions'
 import { useStore } from '../store'
 
 const nodeConfig = {
-  project:        { color: 'rebeccapurple', val: 8, },
-  projectManager: { color: '#00abc7',       val: 2, },
-  funder:         { color: 'crimson',       val: 5, },
-  collaborator:   { color: 'slategrey',     val: 5, },
-  organization:   { color: 'darkslategrey', val: 5, },
+  project: {
+    color: 'rebeccapurple',
+    val: 8,
+  },
+  projectManager: {
+    color: '#00abc7',
+    val: 2,
+  },
+  funder: {
+    color: 'crimson',
+    val: 5,
+  },
+  collaborator: {
+    color: 'slategrey',
+    val: 5,
+  },
+  organization: {
+    color: 'darkslategrey',
+    val: 5,
+  },
 }
 
 export const GraphView = () => {
-  const { projects, projectManagers, funders, collaborators, organizations, parsedData } = useStore()
+  const {
+    parsedData,
+    projects, projectManagers, funders, collaborators, organizations,
+  } = useStore()
+
   const { observe, unobserve, height, width } = useDimensions({
     onResize: () => {
       unobserve()
       observe()
     }
   })
+  
   const [nodes, setNodes] = useState([])
   const [edges, setEdges] = useState([])
 
@@ -38,10 +58,10 @@ export const GraphView = () => {
     }
 
     newNodes = [...new Set([
-        ...projects.map(project => createProjectNode(project)),
-        ...projectManagers.map(pm => createProjectManagerNode(pm)),
-        ...organizations.map(org => createOrganizationNode(org)),
-      ])]
+      ...projects.map(project => createProjectNode(project)),
+      ...projectManagers.map(pm => createProjectManagerNode(pm)),
+      ...organizations.map(org => createOrganizationNode(org)),
+    ])]
 
     projects.forEach(project => {
       const projectRows = [...parsedData.filter(row => row['Name'] === project)]
@@ -63,7 +83,16 @@ export const GraphView = () => {
   }, [projects, projectManagers, organizations])
 
   return (
-    <div ref={ observe } style={{ position: 'absolute', left: 0, top: 0, right: 0, bottom: 0, padding: '2px' }}>
+    <div
+      ref={ observe }
+      style={{
+        position: 'absolute',
+        left: 0,
+        top: 0,
+        right: 0,
+        bottom: 0,
+        overflow: 'hidden'
+    }}>
       <GraphProvider
         nodes={ nodes }
         edges={ edges }

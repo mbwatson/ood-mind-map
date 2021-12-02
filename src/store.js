@@ -16,6 +16,7 @@ export const StoreProvider = ({ children }) => {
   const [organizations, setOrganizations] = useState([])
   const [csvData, ] = useState(testCsv)
   const [parsedData, setParsedData] = useState('')
+  const [selection, setSelection] = useState(null)
   
   useEffect(() => {
     let { data } = readString(csvData, { header: true })
@@ -35,7 +36,11 @@ export const StoreProvider = ({ children }) => {
   }, [csvData])
 
   return (
-    <StoreContext.Provider value={{ projects, projectManagers, funders, collaborators, organizations, csvData, parsedData }}>
+    <StoreContext.Provider value={{
+      csvData, parsedData,
+      projects, projectManagers, funders, collaborators, organizations,
+      selection, setSelection,
+    }}>
       { children }
     </StoreContext.Provider>
   )
