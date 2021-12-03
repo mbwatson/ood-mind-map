@@ -5,23 +5,24 @@ import { useStore } from '../store'
 
 const nodeConfig = {
   project: {
-    color: 'rebeccapurple',
+    color: {
+      main: '#4b0082',
+      dim: '#9f6faf',
+    },
     val: 8,
   },
   projectManager: {
-    color: '#00abc7',
+    color: {
+      main: '#6495ed',
+      dim: '#bac8e5',
+    },
     val: 2,
   },
-  funder: {
-    color: 'crimson',
-    val: 5,
-  },
-  collaborator: {
-    color: 'slategrey',
-    val: 5,
-  },
   organization: {
-    color: 'darkslategrey',
+    color: {
+      main: '#2f4f4f',
+      dim: '#a3aca9',
+    },
     val: 5,
   },
 }
