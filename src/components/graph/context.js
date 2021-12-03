@@ -1,12 +1,16 @@
-import { createContext, useContext } from 'react'
+import { createContext, useContext, useState } from 'react'
 import PropTypes from 'prop-types'
 
 const GraphContext = createContext({})
 
+const initialGraphSettings = {
+  force: 100,
+}
+
 export const GraphProvider = ({ children, nodes, edges }) => {
-  
+  const [settings, setSettings] = useState(initialGraphSettings)
   return (
-    <GraphContext.Provider value={{ nodes, edges }}>
+    <GraphContext.Provider value={{ nodes, edges, settings }}>
       { children }
     </GraphContext.Provider>
   )

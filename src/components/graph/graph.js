@@ -1,16 +1,26 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import loadable from '@loadable/component'
 import { useGraph } from './context'
 import { NodeTooltip } from './'
+import * as d3Force from 'd3-force'
 
 const ForceGraph2D = loadable(() => import('./force-graph'))
 
 export const Graph = ({ height, width }) => {
-  const { nodes, edges } = useGraph()
+  const graphRef = useRef()
+  const { nodes, edges, settings } = useGraph()
   const [selectedNode, setSelectedNode] = useState(null)
   const [highlightedEdges, setHighlightedEdges] = useState(new Set())
 
+  useEffect(() => {
+    if (graphRef.current) {
+      graphRef.current.d3Force('collide', d3Force.forceCollide(10));
+      graphRef.current.d3Force('charge')
+        .strength(-settings.force)
+        .distanceMax(200)
+    }
+  }, [graphRef.current, settings])
   const highlightedNodes = useMemo(() => {
     let nodeSet = new Set()
     highlightedEdges.forEach(edge => {
@@ -33,9 +43,9 @@ export const Graph = ({ height, width }) => {
   const linkColor = useCallback(edge => {
     return highlightedEdges.size
       ? highlightedEdges.has(edge)
-        ? 'red'
-        : '#33333333'
-    : '#33333366'
+        ? '#e22'
+        : '#33333311'
+    : '#33333333'
   }, [highlightedEdges])
 
   const nodeColor = useCallback(node => {
@@ -77,6 +87,7 @@ export const Graph = ({ height, width }) => {
 
   return (
     <ForceGraph2D
+      ref={ graphRef }
       height={ height }
       width={ width }
       graphData={{ nodes: nodes, links: edges }}

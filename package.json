@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "@loadable/component": "^5.15.0",
+    "d3-force": "^3.0.0",
     "dotenv-webpack": "^7.0.3",
     "react": "^17.0.2",
     "react-cool-dimensions": "^2.0.7",
