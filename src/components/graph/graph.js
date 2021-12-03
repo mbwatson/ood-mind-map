@@ -9,7 +9,7 @@ const ForceGraph2D = loadable(() => import('./force-graph'))
 export const Graph = ({ height, width }) => {
   const { nodes, edges } = useGraph()
   const [selectedNode, setSelectedNode] = useState(null)
-  const [highlightedEdges, setHighlightedEdges] = useState([])
+  const [highlightedEdges, setHighlightedEdges] = useState(new Set())
 
   const highlightedNodes = useMemo(() => {
     let nodeSet = new Set()
@@ -30,8 +30,21 @@ export const Graph = ({ height, width }) => {
     context.fill()
   }, [selectedNode])
 
-  const linkColor = useCallback(edge => highlightedEdges.includes(edge) ? 'red' : '#33333366', [highlightedEdges])
-  const nodeColor = useCallback(node => highlightedNodes.size ? highlightedNodes.has(node.name) ? node.color.main : node.color.dim : node.color.main, [highlightedNodes])
+  const linkColor = useCallback(edge => {
+    return highlightedEdges.size
+      ? highlightedEdges.has(edge)
+        ? 'red'
+        : '#33333333'
+    : '#33333366'
+  }, [highlightedEdges])
+
+  const nodeColor = useCallback(node => {
+    return highlightedNodes.size
+      ? highlightedNodes.has(node.name)
+        ? node.color.main
+        : node.color.dim
+      : node.color.main
+    }, [highlightedNodes])
 
   const handleNodeClick = node => {
     if (selectedNode && selectedNode.name === node.name) {
@@ -41,7 +54,7 @@ export const Graph = ({ height, width }) => {
       setSelectedNode(node)
       const incidentEdgesOut = edges.filter(edge => edge.source.name === node.name || edge.target.name === node.name)
       const incidentEdgesIn = edges.filter(edge => edge.target.name === node.name)
-      setHighlightedEdges([...incidentEdgesIn, ...incidentEdgesOut])
+      setHighlightedEdges(new Set([...incidentEdgesIn, ...incidentEdgesOut]))
     }
   }
 
