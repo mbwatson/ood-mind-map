@@ -9,7 +9,7 @@ export const DrawerProvider = ({ children }) => {
   const toggleDrawer = () => setOpen(!open)
 
   return (
-    <DrawerContext.Provider value={{ open, toggleDrawer }}>
+    <DrawerContext.Provider value={{ open, setOpen, toggleDrawer }}>
       { children }
     </DrawerContext.Provider>
   )
