@@ -9,6 +9,7 @@ const ForceGraph2D = loadable(() => import('./force-graph'))
 export const Graph = ({ height, width }) => {
   const { nodes, edges } = useGraph()
   const [selectedNode, setSelectedNode] = useState(null)
+  const [highlightedNodes, setHighlightedNodes] = useState([])
 
   const nodeHighlight = useCallback(({ x, y, val }, context) => {
     context.fillStyle = '#ffffff99'
@@ -23,8 +24,17 @@ export const Graph = ({ height, width }) => {
   const handleNodeClick = node => {
     if (selectedNode && selectedNode.name === node.name) {
       setSelectedNode(null)
+      setHighlightedNodes([])
     } else {
       setSelectedNode(node)
+      const incidentEdgesOut = edges.filter(edge => edge.source.name === node.name || edge.target.name === node.name)
+      const incidentEdgesIn = edges.filter(edge => edge.target.name === node.name)
+      let neighborhood = [...new Set([
+        node.name,
+        ...incidentEdgesIn.map(edge => edge.source.name),
+        ...incidentEdgesOut.map(edge => edge.target.name),
+      ])]
+      setHighlightedNodes(neighborhood)
     }
   }
 
@@ -55,7 +65,7 @@ export const Graph = ({ height, width }) => {
       linkColor="#333"
       enableZoomPanInteraction={ true }
       enablePointerInteraction={ true }
-      nodeCanvasObjectMode={ node => selectedNode === node ? 'before' : undefined }
+      nodeCanvasObjectMode={ node => highlightedNodes.includes(node.name) ? 'before' : undefined }
       nodeCanvasObject={ nodeHighlight }
       onNodeClick={ handleNodeClick }
       nodeLabel={ NodeTooltip }
