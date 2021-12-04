@@ -9,7 +9,7 @@ const ForceGraph2D = loadable(() => import('./force-graph'))
 
 export const Graph = ({ height, width }) => {
   const graphRef = useRef()
-  const { nodes, edges, settings } = useGraph()
+  const { nodes, edges, settings, onNodeClick } = useGraph()
   const [selectedNode, setSelectedNode] = useState(null)
   const [highlightedEdges, setHighlightedEdges] = useState(new Set())
 
@@ -57,6 +57,7 @@ export const Graph = ({ height, width }) => {
     }, [highlightedNodes])
 
   const handleNodeClick = node => {
+    onNodeClick(node)
     if (selectedNode && selectedNode.name === node.name) {
       setSelectedNode(null)
       setHighlightedEdges([])

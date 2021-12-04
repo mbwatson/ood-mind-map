@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { GraphProvider, Graph } from '../components/graph'
 import useDimensions from 'react-cool-dimensions'
 import { useStore } from '../store'
+import { Drawer, useDrawer } from '../components/drawer'
 
 const nodeConfig = {
   project: {
@@ -28,6 +29,7 @@ const nodeConfig = {
 }
 
 export const GraphView = () => {
+  const { openDrawer } = useDrawer()
   const {
     parsedData,
     projects, projectManagers, funders, collaborators, organizations,
@@ -42,6 +44,11 @@ export const GraphView = () => {
   
   const [nodes, setNodes] = useState([])
   const [edges, setEdges] = useState([])
+
+  const handleNodeClick = node => {
+    console.log(`clicked node "${ node.name }"`)
+    openDrawer()
+  }
 
   useEffect(() => {
     let newNodes = []
@@ -97,11 +104,13 @@ export const GraphView = () => {
       <GraphProvider
         nodes={ nodes }
         edges={ edges }
+        onNodeClick={ handleNodeClick }
       >
         <Graph
           height={ height }
           width={ width }
         />
+        <Drawer style={{ zIndex: 99 }}/>
       </GraphProvider>
     </div>
   )

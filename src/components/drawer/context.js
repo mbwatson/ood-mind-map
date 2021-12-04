@@ -7,9 +7,11 @@ export const DrawerProvider = ({ children }) => {
   const [open, setOpen] = useState(false)
 
   const toggleDrawer = () => setOpen(!open)
+  const openDrawer = () => setOpen(true)
+  const closeDrawer = () => setOpen(false)
 
   return (
-    <DrawerContext.Provider value={{ open, setOpen, toggleDrawer }}>
+    <DrawerContext.Provider value={{ open, toggleDrawer, openDrawer, closeDrawer }}>
       { children }
     </DrawerContext.Provider>
   )

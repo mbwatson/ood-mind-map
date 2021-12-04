@@ -7,10 +7,10 @@ const initialGraphSettings = {
   force: 100,
 }
 
-export const GraphProvider = ({ children, nodes, edges }) => {
+export const GraphProvider = ({ children, nodes, edges, onNodeClick }) => {
   const [settings, setSettings] = useState(initialGraphSettings)
   return (
-    <GraphContext.Provider value={{ nodes, edges, settings }}>
+    <GraphContext.Provider value={{ nodes, edges, settings, onNodeClick }}>
       { children }
     </GraphContext.Provider>
   )
@@ -20,6 +20,7 @@ GraphProvider.propTypes = {
   children: PropTypes.node.isRequired,
   nodes: PropTypes.array.isRequired,
   edges: PropTypes.array.isRequired,
+  onNodeClick: PropTypes.func,
 }
 
 export const useGraph = () => useContext(GraphContext)
