@@ -33,6 +33,7 @@ export const GraphView = () => {
   const {
     parsedData,
     projects, projectManagers, funders, collaborators, organizations,
+    selection, setSelection,
   } = useStore()
 
   const { observe, unobserve, height, width } = useDimensions({
@@ -46,7 +47,7 @@ export const GraphView = () => {
   const [edges, setEdges] = useState([])
 
   const handleNodeClick = node => {
-    console.log(`clicked node "${ node.name }"`)
+    setSelection(node)
     openDrawer()
   }
 
@@ -110,7 +111,11 @@ export const GraphView = () => {
           height={ height }
           width={ width }
         />
-        <Drawer style={{ zIndex: 99 }}/>
+        <Drawer style={{ zIndex: 99 }}>
+          {
+            selection && <h2>{ selection.name }</h2>
+          }
+        </Drawer>
       </GraphProvider>
     </div>
   )
