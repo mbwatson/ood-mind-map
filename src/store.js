@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { createContext, useContext } from 'react'
-import { readString } from 'react-papaparse'
+import { usePapaParse } from 'react-papaparse'
 import testCsv from './projects-matrix.csv'
 
 const StoreContext = createContext({ })
@@ -9,6 +9,7 @@ const StoreContext = createContext({ })
 export const useStore = () => useContext(StoreContext)
 
 export const StoreProvider = ({ children }) => {
+  const { readString } = usePapaParse()
   const [projects, setProjects] = useState([])
   const [projectManagers, setProjectManagers] = useState([])
   const [funders, setFunders] = useState([])

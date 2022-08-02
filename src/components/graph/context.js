@@ -8,7 +8,8 @@ const initialGraphSettings = {
 }
 
 export const GraphProvider = ({ children, nodes, edges, onNodeClick }) => {
-  const [settings, setSettings] = useState(initialGraphSettings)
+  const [settings, ] = useState(initialGraphSettings)
+  
   return (
     <GraphContext.Provider value={{ nodes, edges, settings, onNodeClick }}>
       { children }
