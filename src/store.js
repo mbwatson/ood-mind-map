@@ -18,7 +18,6 @@ export const StoreProvider = ({ children }) => {
   const [csvData, ] = useState(testCsv)
   const [parsedData, setParsedData] = useState('')
   const [selection, setSelection] = useState(null)
-  const { readString } = usePapaParse()
   
   useEffect(() => {
     let { data } = readString(csvData, { header: true })
