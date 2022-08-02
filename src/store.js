@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { createContext, useContext } from 'react'
-import { readString } from 'react-papaparse'
+import { usePapaParse } from 'react-papaparse'
 import testCsv from './projects-matrix.csv'
 
 const StoreContext = createContext({ })
@@ -17,6 +17,7 @@ export const StoreProvider = ({ children }) => {
   const [csvData, ] = useState(testCsv)
   const [parsedData, setParsedData] = useState('')
   const [selection, setSelection] = useState(null)
+  const { readString } = usePapaParse()
   
   useEffect(() => {
     let { data } = readString(csvData, { header: true })
