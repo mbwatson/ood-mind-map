@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { Fragment, useCallback, useEffect, useState } from 'react'
 import { GraphProvider, Graph } from '../components/graph'
 import useDimensions from 'react-cool-dimensions'
 import { useStore } from '../store'
@@ -91,6 +91,35 @@ export const GraphView = () => {
     setEdges(newEdges)
   }, [projects, projectManagers, organizations])
 
+  const Summary = useCallback(() => {
+    return (
+      <div>
+        <h3>Project Managers</h3>
+        <ul>
+          <li>lorem ipsum</li>
+          <li>lorem ipsum</li>
+        </ul>
+        <h3>Projects</h3>
+        <ul>
+          <li>lorem ipsum</li>
+          <li>lorem ipsum</li>
+        </ul>
+        <h3>Funders</h3>
+        <ul>
+          <li>lorem ipsum</li>
+          <li>lorem ipsum</li>
+        </ul>
+        <h3>Collaborators</h3>
+        <ul>
+          <li>lorem ipsum</li>
+          <li>lorem ipsum</li>
+        </ul>
+        <pre>{JSON.stringify(selection, null, 2)}</pre>
+
+      </div>
+    )
+  }, [selection])
+
   return (
     <div
       ref={ observe }
@@ -113,7 +142,12 @@ export const GraphView = () => {
         />
         <Drawer style={{ zIndex: 99 }}>
           {
-            selection && <h2>{ selection.name }</h2>
+            selection && (
+              <Fragment>
+                <h2>{ selection.name }</h2>
+                <Summary selection={ selection } />
+              </Fragment>
+            )
           }
         </Drawer>
       </GraphProvider>

@@ -16,6 +16,7 @@ export const Drawer = ({ openWidth = 300, children, drawerStyle }) => {
         className="drawer"
         style={{
           width: `${ openWidth }px`,
+          padding: '1rem',
           transform: `translateX(${ open ? 0 : '100%' })`,
           ...drawerStyle,
         }}

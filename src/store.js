@@ -9,6 +9,7 @@ const StoreContext = createContext({ })
 export const useStore = () => useContext(StoreContext)
 
 export const StoreProvider = ({ children }) => {
+  const { readString } = usePapaParse()
   const [projects, setProjects] = useState([])
   const [projectManagers, setProjectManagers] = useState([])
   const [funders, setFunders] = useState([])
